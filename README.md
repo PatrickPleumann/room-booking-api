@@ -7,18 +7,20 @@ Sie prüft Buchungen gegen Regeln: Überschneidungen werden erkannt, Kapazitäte
 Stornierungen nur vor Beginn erlaubt. Für jeden Raum berechnet sie die freien Zeitfenster eines
 Tages.
 
-> **Status:** Dies ist ein bewusstes Lernprojekt und noch im Aufbau. Ich erarbeite mir jede Technik
-> zuerst einzeln, bevor sie ins Projekt kommt.
+> **Status:** In Entwicklung. Aktuell: Domänenlogik (Buchungsregeln, Zeitfenster) per
+> testgetriebener Entwicklung. Datenbank und API folgen.
 
-## Lernpfad
+## Technologien
 
-- [ ] **Docker** (in Arbeit, Grundlagen sitzen) · [Meine Befehlsübersicht](Docker-Cheatsheet.md)
-- [ ] SQL Server als Container
-- [ ] Entity Framework Core
-- [ ] ASP.NET Core Web API
-- [ ] Tests mit xUnit
+- C# / .NET 10
+- ASP.NET Core Web API
+- Entity Framework Core
+- SQL Server (im Docker-Container)
+- Docker
+- xUnit
 
-## Wie ich lerne
+## Arbeitsweise & KI-Einsatz
 
-Konzepte zuerst verstehen, dann anwenden. Begleitet werde ich dabei von einem KI-Tutor (Claude),
-der erklärt und nachfragt. Die Befehle tippe und den Code schreibe ich selbst.
+Code und Tests schreibe ich selbst, testgetrieben (erst der fehlschlagende Test, dann die
+Umsetzung). Begleitet werde ich von einem KI-Tutor (Claude): Er gibt als Architekt die
+Anforderungen vor, erklärt Konzepte und reviewt meinen Code.
