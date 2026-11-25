@@ -54,5 +54,39 @@ namespace RoomBooking.Tests
             Assert.Equal(startDateTime, timeSlot.Start);
             Assert.Equal(endDateTime, timeSlot.End);
         }
+
+        [Theory]
+        [InlineData(14)]
+        [InlineData(481)]
+
+        public void Ctor_DurationTooShortOrTooLong_ThrowsArgumentException(int duration)
+        {
+            //arrange
+            var dateOnly = new DateOnly(2026, 11, 25);
+            var dateTimeStart = new DateTime(dateOnly, new TimeOnly(8,0));
+            var dateTimeEnd = dateTimeStart.AddMinutes(duration);
+
+            //act && assert
+            Assert.Throws<ArgumentException>(() => new TimeSlot(dateTimeStart, dateTimeEnd));
+        }
+
+        [Theory]
+        [InlineData(15)]
+        [InlineData(480)]
+
+        public void Ctor_ValidDuration_AssignsValues(int duration)
+        {
+            //arrange
+            var dateOnly = new DateOnly(2026, 11, 25);
+            var dateTimeStart = new DateTime(dateOnly, new TimeOnly(8, 0));
+            var dateTimeEnd = dateTimeStart.AddMinutes(duration);
+
+            //act
+            var timeSlot = new TimeSlot(dateTimeStart, dateTimeEnd);
+
+            //assert
+            Assert.Equal(dateTimeStart, timeSlot.Start);
+            Assert.Equal(dateTimeEnd, timeSlot.End);
+        }
     }
 }
