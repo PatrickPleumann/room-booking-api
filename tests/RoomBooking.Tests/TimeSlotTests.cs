@@ -8,9 +8,9 @@ namespace RoomBooking.Tests
         public void Ctor_EndBeforeStart_ThrowsArgumentException()
         {
             //arrange
-            var dateOnly = new DateOnly(2026,11,25);
+            var dateOnly = new DateOnly(2026, 11, 25);
 
-            var endTime = new TimeOnly(10,0); 
+            var endTime = new TimeOnly(10, 0);
             var endDateTime = new DateTime(dateOnly, endTime);
 
             var startTime = new TimeOnly(14, 15);
@@ -63,7 +63,7 @@ namespace RoomBooking.Tests
         {
             //arrange
             var dateOnly = new DateOnly(2026, 11, 25);
-            var dateTimeStart = new DateTime(dateOnly, new TimeOnly(8,0));
+            var dateTimeStart = new DateTime(dateOnly, new TimeOnly(8, 0));
             var dateTimeEnd = dateTimeStart.AddMinutes(duration);
 
             //act && assert
@@ -87,6 +87,36 @@ namespace RoomBooking.Tests
             //assert
             Assert.Equal(dateTimeStart, timeSlot.Start);
             Assert.Equal(dateTimeEnd, timeSlot.End);
+        }
+
+
+        [Theory] // hrs  min  hrs  min
+        [InlineData(9,   0,   11,  0,  true)]
+        [InlineData(11,  0,   13,  0,  true)]
+        [InlineData(10,  30,  11,  30, true)]
+        [InlineData(9,   0,   13,  0,  true)]
+        [InlineData(9,   0,   10,  0,  false)]
+        [InlineData(12,  0,   13,  0,  false)]
+        [InlineData(8,   0,   9,   0,  false)]
+        [InlineData(13,  0,   14,  0,  false)]
+        public void Overlaps_OtherSlotInVariousPositions_ReturnsTrueOnlyOnOverlap(int otherStartHour, int otherStartMinute, int otherEndHour, int otherEndMinute, bool isColliding)
+        {
+            //arrange
+            var dateOnly = new DateOnly(2026, 11, 25);
+            var dateTimeStart = new DateTime(dateOnly, new TimeOnly(10, 0));
+            var dateTimeEnd = new DateTime(dateOnly, new TimeOnly(12, 0));
+
+            var timeSlot = new TimeSlot(dateTimeStart, dateTimeEnd);
+
+            var otherTimeSlot = new TimeSlot(
+                new DateTime(dateOnly, new TimeOnly(otherStartHour, otherStartMinute)),
+                new DateTime(dateOnly, new TimeOnly(otherEndHour, otherEndMinute)));
+
+            //act
+            var collision = timeSlot.Overlaps(otherTimeSlot);
+
+            //assert
+            Assert.Equal(isColliding, collision);
         }
     }
 }

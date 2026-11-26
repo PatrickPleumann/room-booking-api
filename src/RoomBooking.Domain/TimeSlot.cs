@@ -19,5 +19,12 @@ namespace RoomBooking.Domain
             Start = start;
             End = end;
         }
+
+        public bool Overlaps(TimeSlot other)
+        {
+            if (Start < other.End && other.Start < End) return true;
+
+            return false;
+        }
     }
 }
